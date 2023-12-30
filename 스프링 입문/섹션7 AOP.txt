@@ -1,0 +1,31 @@
+섹션7 AOP
+
+
+[AOP가 필요한 상황]
+한 메소드의 실행 시간을 측정하고 싶음
+모든 함수 바디의 시작과 끝부분에 시간을 재는 코드를 추가함
+
+-> 비즈니스 핵심로직이 아닌 '공통관심사항'임
+-> 공통 관심 사항과 핵심 관심 사항 코드가 섞여 유지보수가 어려워짐
+이를 공통 관심 사항을 처리하기 위한 기술 : AOP
+
+
+[AOP]
+Aspect Oriented Program
+관점 지향 프로그램
+
+위의 예시에서 공통관심사항에 해당하는 코드(클래스)를 만들고 원하는 함수에 적용
+
+- 클래스를 만들고 @Aspect를 위에 작성
+- Bean으로 등록해줘야함 _클래스 위에 @Component쓰거나 config클래스에서 @Bean으로 등록
+
+- 사용할 함수위에 @Around어노테이션으로 사용할 위치나 범위 지정
+-> @Around("excution(적용할 위치)")
+ex) @Around("excution(* hello.hellospring..*(..))")
+// hello.hellospring 패키지 하위에는 다 적용하기
+
+
+원리 :
+memberService라는 클래스에 aop를 적용한다면
+스프링 컨테이너 내부적으로
+프록시로 만든 가짜 memberService에서 aop가 실행이되고 joinPoint.proceed()로 실제 memberService가 이어서 실행됨

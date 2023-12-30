@@ -1,0 +1,57 @@
+섹션3 회원관리예제 - 백엔드 개발
+
+Test코드
+- JUnit 이용
+- 방법
+: 
+1. test패키지에 테스트할 class를 똑같이 생성(똑같이는아니고 뒤에 Test붙여서 생성)
+2. 테스트할 클래스 instantiation
+3. 테스트할 함수 프로시저로 만들어서 위에 @Test 어노테이션 입력
+4. 해당 함수바디에 그 함수 테스트하는 코드 작성
+5. 해당 함수 실행	// or 클래스로 실행
+
+* assertThat() 함수 이용
+: Assertions 입력후 나오는 목록중 assertj를 선택해 import
+// 또는 import static org.assertj.core.api.Assertions.*;
+// 예외 발생하는지 테스트시 assertThrows() 함수 사용, 이건 junit라이브러리 사용
+ex) Assertions.assertThat(member).isEqualTo(findMember); // member와 findMember가 같으면 초록불뜸
+
+* @AfterEach
+다른 함수가 끝날때마다 이 함수를 실행
+// 이 영상예제에서는 각 테스트(함수)마다 객체를 만들어 container에 넣는데, 테스트(함수)가 끝날때마다 다른 테스트(함수)를 위해 container를 초기화시켜줌
+
+* @BeforeEach
+마찬가지로 다른 함수가 시작되기 전에 이 함수를 실행
+// 매번 새로 instantiation해줘야할 필요가 있을 때 등 사용
+
+* @DisplayName("테스트이름1")
+해당 단위테스트의 이름을 지정할 수 있음
+
+* TDD
+이 영상예제에서 repository클래스를 먼저 만들고 test클래스를 만들어서 test하는데,
+먼저 test를 만들어놓고 repository클래스를 개발하는 것을 "테스트주도개발" "TDD"라고 함
+_세모틀을 먼저 만들어놓고 세모를 만들어서 끼워지나 안끼워지나
+
+* 테스트함수 바디 작성시 : 주석 given when then
+//given	뭔가가 주어졌는데
+멤버 두명 생성
+
+// when  이게 실행됐는데
+테스트할 함수 실행
+
+// then  결과가 이게 나와야 돼
+assertThat()함수로 결과값 검증
+
+
+
+
+
+
+
+
+
+
+
+
+
+

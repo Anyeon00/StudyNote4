@@ -1,0 +1,78 @@
+섹션4 스프링 빈과 의존관계
+
+[컴포넌트 스캔과 자동 의존관계 설정]
+@Autowired 를 쓰면
+스프링 컨테이너에 있는 객체를 parameter로 가져와서 생성해줌
+-> 사용할 객체 클래스 위에 서비스인 경우는 @Service를, 리포지토리면 @Repository를
+ 써줘야 스프링 컨테이너에 넣어둠
+
+
+* 따라서 Controller객체는 @Controller, Service객체는 @Service, Repository객체는 @Repository라고 명시함
+그러면 스프링 컨테이너에 들어감
+// 즉, 스프링 빈으로 자동 등록됨
+// 싱글톤으로 등록함
+
+* 그리고 Controller와 Service나 Repository를 연결할때 생성자에서 @Autowired 사용
+그러면 스프링 컨테이너에서 꺼내와서 사용함
+// 이게 dependency injection(DI)
+// 생성자주입
+ex)MemberService에서 MemberRepository를 사용하고 싶을때
+private final MemberRepository memberRepository;
+@Autowired
+MemberService(MemberRepository memberRepository){
+  this.memberRepository = memberRepository;
+}
+
+* 생성자를 생략하고 그냥 그 필드에다가 앞에 @Autowired써도됨
+// 필드주입
+
+* 생성자 대신 그냥 setter함수로 만들고 위에 @Autowired써도됨
+// Setter주입
+
+* 생성자주입이 젤 권장
+
+* 생성자가 하나일 때 생성자에 @Autowired 생략가능
+
+* 같은 패키지 내에서만 상호작용함
+
+
+
+[자바 코드로 직접 스프링 빈 등록하기]
+
+스프링 빈에 등록해줘 라는 코드로 직접 등록하는 법
+
+Controller를 제외한 나머지에 @Service, @Repository, @Autowired같은 어노테이션 사용하지않음
+
+대신 새 클래스를 만들고 그위에 @Configuration을 붙임
+그리고 클래스안에서 
+@Repository나 @Service 로 등록하려했든 객체들을 return하는 함수를 만듦
+그위에 @Bean어노테이션을 붙임
+ex) MemberRepository라는 repository를 이 방식으로 등록하면
+Configureation클래스안에서
+@Bean
+public MemberRepsoitory memberRepository(){
+  return new MemoryMemberRepository();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

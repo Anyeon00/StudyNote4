@@ -1,0 +1,97 @@
+섹션6 스프링DB 접근 기술
+
+h2 데이터베이스 설치
+// 실무에서는 mysql이나 oracle쓰지만 교육용db로 많이 쓰는 거
+
+https://www.h2database.com/html/download-archive.html
+
+
+[스프링 통합 테스트]
+데이터베이스까지 연동하여 테스트
+
+테스트클래스위에
+@SpringBootTest	// 스프링 컨테이너와 테스트를 함께 실행한다는 뜻
+@Transactional	// 각각의 test가 끝나면 rollback해줌, 전에처럼 @AfterEach로 다시 지워주는 코드를 실행할 필요X
+작성
+
+@Autowired는 그냥 테스트이므로 필드주입으로 사용
+
+
+* 테스트클래스단위(통합테스트)로 테스트하는 것보다 하나의 함수단위(단위테스트)로 테스트하는게 더 좋은 방법
+
+* 테스트케이스 작성하는 것이 정말 중요, 실제 개발 코드작성이 20%면 80%는 테스트 코드 작성일 정도
+
+[JDBC]
+
+[JdbcTemplate]
+
+[JPA]
+
+* JPA는 ORM기술 : Object Relational Mapping
+
+- build.gradle의 의존관계(dependencies)에
+implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+- application.properties에
+spring.jpa.show-sql=true	// jpa가 날리는 sql을 볼 수 있음
+
+- DB에 테이블로 관리할 객체 클래스에 @Entity 어노테이션을 붙임
+- pk가 되는 필드위에 @변수명
+* DB에 name을 넣으면 자동으로 id가 만들어져 같이 넣어 생성하는 것을 identity전략이라함
+따라서 id필드위에 @GeneratedValue(strategy = GenerationType.IDENTITY) 작성
+_DB 테이블에 name이란 컬럼과 id란 컬럼 그리고 이에 매핑되는 member 클래스에 변수 id와 변수 name이 있는 상황에서의 예시 설명
+- 클래스의 name이라는 이름의 필드위에 @Column(name = "username")이라고 쓰면
+이 클래스의 name변수는 db에 username이라는 column으로 매핑
+
+- 위 의존관계 추가로 인해 스프링 부트에서 EntityManager를 만들어줌
+-> Jpa를 쓰려면 이 EntityManager를 주입받아야함 _@Autowired로 _생성자가 하나면 생략가능
+
+- private final EntityManager em;
+  대충 생성자로 injection하는 코드
+  save하는 함수(Member member){
+    em.persist(member); 하면 jpa가 insert쿼리를 만들어서 db에 저장함
+
+- find하는 함수(Long id){
+    Member mb = em.find(Member.class, id);  // parameter : 조회할 type이랑 식별자
+
+- pk가 아닌 name으로 select나 select *등을 할때
+em.createQuery()를 이용해 직접 sql문 작성
+
+- jpa를 사용하는 예를들면 회원가입하는 서비스 클래스에서 @Transactional이란 어노테이션 필요
+(jpa를 통한 모든 데이터변경은 트랜잭션 안에서 실행해야 함)
+
+* select한게 null인 경우 Optional 타입으로 리턴(감싸서 리턴)
+방법 : return 찾은객체.stream().findAny();
+
+
+* 요약: 저장하고 조회하고 update하는거 sql문 짤필요 없다, 근데 pk가 아닌 column이나 select * 할때는 sql(_jpql)을 작성해줘야 함 -> 근데 아래의 스프링 데이터 JPA를 사용하면 나머지 2개도 sql안짜도 됨
+
+
+
+[스프링 데이터 JPA]
+
+JPA를 편리하게 사용할 수 있게 도와주는 기술
+
+앞의 jpa설정을 그대로 사용
+
+- JpaRepository<객체타입, key변수타입>을 상속받는 인터페이스 생성
+// 자동으로 crud를 구현한 bean을 생성해 컨테이너에 추가해줌
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,96 @@
+섹션1 프로젝트 환경설정
+
+[spring boot 생성]
+- https://start.spring.io 접속
+
+- 프로젝트 : Gradle-Groovy
+- Language : java
+- Spring Boot : 3.0 이상
+- Project Metadata
+group : 보통 기업도메인 명
+artifact : 빌드후 결과물(프로젝트명)
+- add dependencies // 어떤 라이브러리를 쓸거냐
+Spring Web
+Thymeleaf // html 만들어주는거
+
+- Generate로 다운로드
+
+
+[인텔리제이로 실행]
+
+- 인텔리제이에서 open에들어가서 다운로드한 파일안에 buid.gradle파일 오픈
+(class path 오류 _인텔리제이 설정에서 Build, Excution, Deplyment의 Build Tools의 Gradle에서 Gradle JVM을 JDK17이상 버전으로 설정해주면 됨)
+(그리고 Settings에 gradle검색해서 나온 창에 Build and run using과 Run tests using을 IntelliJ IDEA로 바꾸기)
+
+* 이하 기타 오류들 복사해서 구글에 검색하면 다 나옴
+
+* build.gardle 파일 설명 : gradle이 버전설정하고 라이브러리 땡겨오는 것이구나 이해 (start.spring.io서 설정한 내용)
+
+- 메인 프로그램 run
+-> 실행결과창에 Tomcat initialized with port 8080(http)라는 부분이 있음
+-> 웹브라우저에서 localhost:8080으로 접속
+-> 무슨 에러 페이지가 뜨면 성공(연결이 안된 페이지는 실패임)
+* localhost 접속시 로그인 뜨는경우 : tomcat과 기존의 (아마)oracle의 포트번호가 겹쳐서 충돌현상임
+-> 둘중 하나 포트번호를 변경해줘야하는데 tomcat을 바꾸는 경우 매 프로젝트생성시마다 명시해줘야함
+따라서 oracle쪽 포트번호 변경 권장
+방법 : https://code-nen.tistory.com/120
+
+
+[라이브러리 살펴보기]
+Gradle은 의존 관계가 있는 라이브러리를 함꼐 다운로드 한다
+
+스프링부트 라이브러리
+- spring-boot-starter-web
+-- spring-boot-starter-tomcat : 톰캣(웹서버)
+-- spring-webmvc : 스프링 웹 MVC
+- spring-boot-starter-thymeleaf : 타임리프 템플릿 엔진(View)
+- spring-boot-starter(공통) : 스프링 부트 + 스프링 코어 + 로깅
+
+테스트 라이브러리
+- spring-boot-starter-test
+-- junit : 테스트 프레임워크
+-- mockito : 목 라이브러리
+-- assertj : 테스트 코드를 좀 더 편하게 작성하게 도와주는 라이브러리
+-- spring-test : 스프링 통합 테스트 지원
+
+
+[View 환경설정]
+html 작성하기
+- src - main - resources - static 에 index.html 이름으로 new file만들기
+- html코드 작성
+* 여기서 html코드작성은 thymeleaf 템플릿 엔진을 이용
+..나머지는 생략
+
+* model(자료구조)객체는 spring이 자동으로 만들어서 넘겨줌,
+src-main에 만든 controller파일에서 @Controller 어노테이션써줌 // controller임
+mode.addAtrribute함수를 통해 model객체에 key와 value넣음
+src-main-resources-templates에 만든 html파일에다 thymeleaf를 이용한 html코드작성 // view임
+${key} 이부분에 아까 key로 넣은 data글자가 return되어 출력됨
+
+
+
+* Controller
+는 Contorller어노테이션(@Controller)붙인 클래스안에서, @GetMapping붙인 함수로 html파일이름과 같은 이름으로 선언되어 key와 value를 함께 model객체에 저장함, 그리고 template에서 해당 html에서 key와 value를 사용
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

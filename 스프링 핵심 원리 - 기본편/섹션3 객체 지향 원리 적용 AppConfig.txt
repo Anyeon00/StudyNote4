@@ -1,0 +1,127 @@
+섹션3 객체 지향 원리 적용 AppConfig
+
+[새로운 할인정책 개발]
+
+
+[새로운 할인 정책 적용과 문제점]
+
+할인 정책을 변경하려면 클라이언트인 OrderServiceImpl을 고쳐야한다
+// private final DiscountPolicy discountPolicy = new FixDiscountPolicy();  할인정책 변경 전
+private final DiscountPolicy discountPolicy = new RateDiscountPolicy();  // 변경 후
+
+-> 주문서비스 클라이언트'OrderServiceImpl'은 할인정책 인터페이스와 구현객체를 모두 의존하고(알고) 있다.
+: DIP 위반 _추상화에만 의존하라
+-> 할인 정책을 Fix..에서 Rate로 바꾼다면 클라이언트인 OrderServiceImpl의 코드도 변경해야함
+(클라이언트 코드에 영향을 줌)
+: OCP 위반 _변경에는 닫혀있고 확장에는 열려있어야 한다
+
+
+
+문제 해결
+DIP 해결 - 인터페이스에만 의존하도록 코드 변경
+// private final discountPolicy = new RateDiscountPolicy(); 코드 변경전
+private DiscountPolicy discountPolicy;  // 변경 후
+
+-> 하지만 구현체가 없는데 어떻게 작동하나
+
+-> 누군가가 구현체를 대신 생성해 주입(discountPolicy = ?) 해줘야 한다
+
+
+
+[관심사의 분리]
+ServiceImpl에서 Discount구현체를 선택하는건
+로미오배역인 류준열이 여자주인공을(줄리엣배역의 배우를) 선택하는 것과 같다
+공연기획자가 선택해야지..
+-> 류준열은 공연도 해야하고, 여자주인공도 뽑아야하는 다양한 책임을 가지고 있다
+(SRP도 위반)
+
+=> 역할의 배우를 뽑고, 역할에 배우를 지정해주는 공연 기획자가 나올 시점
+: AppConfig
+
+AppConfig
+: '구현 객체를 생성', 그리고 '연결'하는 책임을 가진 클래스
+
+사용할 구현객체를 인터페이스로 반환하는 함수 생성
+ex)
+// return type이 인터페이스임, 함수이름은 그냥 return type과 똑같이
+public MemberService memberServce(){  
+  // 인터페이스의 구현객체를 생성 후 return함, 구현객체가 사용하는 인터페이스를 argument로
+  return new MemberServiceImpl(new MemoryMemberRepository());
+}
+* upcasting되어 return됨 그리고 해당 클래스의 생성자로 연결되어 주입됨
+* 구현객체가 사용하는 인터페이스도 같은 방식으로 구현객체를 반환하는 함수 만들어줌
+
+=> AppConfig는 구현객체를 생성후, 생성자를 통해서 주입(연결)해줌
+_위 DIP 해결 이후의 문제점을 해결해줌
+=> 객체를 생성하고 연결하는 역할과 실행하는 역할이 명확히 분리됨
+=> 클라이언트(사용자) 클래스입장에서 보면 의존관계를 외부에서 주입해줌 _DI 의존관계 주입
+
+
+[AppConfig 리팩터링]
+AppConfig를 통해서 어플리케이션 구성에 대해 잘 보여야 한다.
+(역할에 따른 구현을 한눈에 볼 수 있어야 한다)
+
+바로 위 코드예시의 return statement의 parameter에 구현체를 생성해서 가지고 있는데,
+같은 방식으로 이 구현체를 인터페이스로 return하는 함수로 만들어서, parameter에 그 함수를 대신 써줌
+
+* 위 코드예시를 보면 MemberService 인터페이스는 MemberServiceImp구현체를 쓰는구나 처럼
+즉, AppConfig를 보면 무슨 인터페이스는 무슨 구현체를 쓰는구나가 바로 보임
+_공연 기획자(AppConfig)는 어떤 역할에 어떤 배우가 있는지 다 앎
+
+
+[Ioc, DI, 그리고 컨테이너]
+
+클라이언트 클래스가 사용할 구현객체를 직접 할당하는게아니라 AppConfig가 외부에서 해줌
+이렇게 프로그램의 제어 흐름을 직접 제어하는게 아니라 외부에서 관리하는 것을 '제어의 역전(Ioc _Inversion of Control)'라고 함
+
+* 프레임워크 vs 라이브러리
+프레임워크가 내가 작성한 코드를 제어하고 대신 실행하면 프레임워크(JUnit)
+반면 내가 작성한 코드가 직접 제어의 흐름을 담당하면 라이브러리
+
+의존관계 주입 DI(Dependency Injection)
+- 정적인 의존관계 : import코드만 보고도 의존관계를 쉽게 판단할 수 있다.
+실행해보지 않아도 알 수 있다. 하지만 이것만 보고는 인터페이스에 어떤 클래스가 올지 알 수 없다.
+
+- 동적인 의존관계 : 의존관계를 주입하면 클라이언트를 변경하지 않아도 됨
+
+IoC컨테이너, DI 컨테이너
+AppConfig같이 객체를 생성하고 관리하며 의존관계를 연결해주는걸
+IoC해주는 컨테이너, 또는 DI해주는 컨테이너라고 하여 IoC컨테이너, DI컨테이너라고 한다
+근데 최근엔 의존관계에 초점을 두어 DI컨테이너라고 함
+
+
+[스프링으로 전환하기]
+AppConfig클래스 위에 @Configuration, 각 함수위에 @Bean 어노테이션 붙이기
+└ 어플리케이션의 설정 정보
+-> 스프링 컨테이너라는 곳에 등록됨
+
+=> 스프링 컨테이너는 @Configuration이 붙은 AppConfig를 구성 정보로 사용하고, @Bean이 붙은 메서드를 모두 호출한다. 그리고 반환된 객체를 스프링 컨테이너에 등록한다.
+* 스프링 빈은 @Bean이 붙은 메서드의 명을 스프링 빈의 이름으로 사용
+
+* applicationContext.getBean()을 이용해 스프링 컨테이너에서 스프링 빈을 찾아서 사용가능
+
+
+
+그냥 AppConfig객체 이용해서 주입하고 사용한거에 비해서
+@~도 일일이 붙이고 꺼낼때도 applicationContext.getBean(~~~~);이렇게 써야하는데
+더 복잡해진것같은데 왜 스프링 컨테이너를 써야하나?
+에 대해서 다음 장에 쭉 설명
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

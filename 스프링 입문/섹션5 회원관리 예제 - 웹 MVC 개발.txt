@@ -1,0 +1,45 @@
+섹션5 회원관리 예제 - 웹 MVC 개발
+
+[홈화면 추가]
+- @Getmapping("/") 은 기본 홈화면주소를 뜻함
+* index.html이 기본 홈화면아닌가?
+: 웹브라우저에서 요청이 오면 먼저 스프링 컨테이너에서 찾고 없으면 static에서 찾음
+따라서 스프링 컨테이너에 컨트롤러가 존재하므로 우선순위를 가짐
+
+
+[회원 등록]
+html코드에서
+<form>태그안에서
+<input>태그의 속성의 name이 서버로넘어갈때 키가 됨
+ex)
+<form action="/members/new" method="post">
+  <div class="form-group>
+    <input type="text" name="name">
+  </div>
+</form>
+// form에서 /members/new에 post방식으로 넘어감
+
+* contorller에서 @PostMapping으로 받음
+-> 데이터를 <form>같은데 넣어서 전달할때 @PostMapping사용
+, @GetMapping은 조회할때 주로 씀
+
+* html파일에서 ${xxx}는 model 객체안의 값을 꺼내는 것임
+model객체에 넣을때는 컨트롤러에서 (model import후)
+model.addAttribute()함수를 이용해 
+key와 value로 (스프링 컨테이너관리하에 있는)에 model객체에 저장함
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

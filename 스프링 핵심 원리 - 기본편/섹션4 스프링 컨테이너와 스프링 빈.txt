@@ -1,0 +1,92 @@
+섹션4 스프링 컨테이너와 스프링 빈
+
+[스프링 컨테이너 생성]
+스프링컨테이너를 부를 때
+ApplicationContext 또는 BeanFactory로 구분하여 이야기한다
+
+1. 스프링 컨테이너 생성
+스프링 컨테이너 <- 스프링 빈 저장소 // 가 있음
+
+2. 스프링 빈 등록
+@Bean이 붙은걸 모두 호출해서 return된 객체들을 스프링 빈 저장소에 등록
+(스프링 빈 이름과 구현객체를 묶어서)
+* 스프링 빈 이름은 메서드 이름을 사용하지만 직접 부여도 가능 _@Bean(name="memberService2")
+* 스프링 빈 이름은 중복되면 안됨
+
+3. 스프링 빈 의존관계 설정
+코드에 따라 인터페이스와 구현클래스간의 의존관계를 주입(서로 엮어주는 것)
+* 단순히 자바 코드를 호출하는 것 같지만, 차이가 있다. 이 차이는 뒤에 싱글톤 컨테이너에서 설명
+
+
+[컨테이너에 등록된 모든 빈 조회]
+AnnatationConfigApplicationContext ac = new ''(AppConfig.class);
+String[] beanDefinitionNames = ac.getBeanDefinitionNames();
+for(String beanDefinitionName : beanDefinitionNames){
+  BeanDefinition beanDefinition = ac.getBeanDefinition(beanDefinitionName);
+  if(beanDefinition.getRole() == BeanDefinition.ROLE_APPLICATION){
+    Object bean = ac.getBean(beanDefinitionName);
+    sout("name = " + beanDefinitionName + " object = " + bean);
+  }
+}
+
+[스프링 빈 조회 - 기본]
+ac.getBean(빈이름, 타입) _이름과 타입으로 조회
+: MemberService memberService = ac.getBean("memberService", MemberService.class);
+Assertions.asserThat(memberService).isInstanceOf(MemberServiceImpl.class);
+
+ac.getBean(타입) _타입으로만 조회 (같은 타입이 여러개 있으면 나중에 곤란해짐)
+: MemberService memberService = ac.getBean(MemberService.class);
+Assertions.asserThat(memberService).isInstanceOf(MemberServiceImpl.class);
+ 
+* 조회 대상 스프링 빈이 없으면 예외 발생
+
+[스프링 빈 조회 - 동일한 타입이 둘 이상]
+특정 타입으로 모두 조회하기
+ac.getBbeansOfType(MemberRepository.class); alt + enter
+for(String key : ~.keySet()){
+  soutv("key = " + key + "value = " + ~.get(key));
+}
+
+[스프링 빈 조회 - 상속 관계]
+중요
+
+부모 타입으로 조회하면, 자식 빈들도 모두 함께 조회됨 // 대부분의 경우에 자식들은 다 함께 끌려나옴
+예를 들면 최상위 객체인 Object타입으로 조회하면, 모든 스프링 빈을 조회함
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
