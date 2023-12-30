@@ -1,0 +1,151 @@
+1강
+css파일에 아래를 입력하면 ~.css파일의 css도 적용됨
+:@import url(~.css);
+
+변수만들기(1.어떤 태그에서만 사용할수있게2.모든곳에서)
+(1은 특정태그{}안에, 2는 :root{}안에, --붙이고 뒤에 변수이름)
+ex)1.
+div {
+--abcborder: solid 1px orange;
+}
+2.
+:root{
+--abcborder: solid 1px orange;
+}
+변수사용하기(value에 var()입력후 괄호안에 변수입력)
+ex)
+h1{
+	border: var(--abcborder);
+}
+
+2강
+선택자 심화
+속성값까지 포함하여 선택
+:ex)
+a[href="https://www.naver.com"]{
+	~
+}
+속성값(class등)에 특정 텍스트를 포함하는 요소 선택
+:ex) class속성에 item이 들어가는 div들을 선택할때
+div[class*="item"]{
+	~
+}
+-----------
+마우스오버
+: 선택자:hover{
+	~
+}
+클릭중
+: 선택자:active{
+	~
+}
+input이 클릭되어 입력을 받는 상태
+: input[type="text"]:focus{
+	outline: 1px solid black;
+}
+a태그중 세번째 요소
+(선택자 뒤에 :nth-of-type하고 괄호안에 숫자)
+: a:nth-of-type(3){
+	~
+}
+부모 엘리먼트의 모든 자식요소중 세번째 요소
+: 부모태그:nth-child(3){
+	~
+}
+가상요소(자리는 차지하지 않는 요소)
+ex)li 뒤에 나타낼때(앞에 나타날때는 ::before)
+li::after{
+	content:'안녕';
+	display:inline-block;
+	margin,width,hegiht...
+}
+드래그했을때
+ex) li::selection{
+	background-color: orange;
+}
+
+3강
+상속과 리셋
+{ color:inherit;}은 본인의 선택자의 속성의
+color을 쓰지 않고 부모의 color을 사용한다는 뜻
+{ all: unset}은 브라우저가 임의로 부여한 css를 제거
+또 revert나 initial value도 있는데 뭔소린지몰름
+
+4강
+벤더프리픽스(속성 접두사)
+-최신기능속성이 구버전브라우저에 적용되지 않는경우에
+사용하는 접두사, 그렇게 중요하진 않아보임
+
+5강
+서체와 웹폰트
+눈누 라는 무료(상업용으로도가능)폰트사이트 검색
+
+css에 @import ulr(폰트페이지주소) 를 입력(또는 붙여넣기 내용 복사후 붙여넣기)후,
+원하는 선택자의 속성에 font-family:value값 입력
+(첫번째value부터 우선순위, 쉼표로 차선순위 글꼴, 마지막value는 sans-serif, serif, cursive 중 택1)
+ex) {font-family:'Malgun Gothic','맑은 고딕',sans-serif;}
+
+6강
+vertical-align: inline요소,table,button등에 적용
+위치 미세조정
+white-space:wrap :width를 넘어가는 글을 밑줄로 내리지말고 일렬로 계속 프린트
+overflow: hidden;
+text-overflow: ellipsis; :width를 넘어 hidden으로 가려진 글을 ...으로 표시(ellipsis, clip_자르기)
+
+7강
+grid레이아웃
+$부모속성
+grid-template-columns: 1fr auto;(auto는 내용크기에따라서)
+grid-template-rows: 1fr 1fr;
+gap: N px;
+grid-auto-rows: minmax(150px,auto); 최소최대크기_auto는 content만큼
+justify-items: stretch;(stretch,start,center,end)
+align-items: stretch;('')
+$자식속성
+grid-column:1;(2,3,1/span3,1/4등등 yalco사이트참조)
+grid-row:1;('')
+justify-self:stretch;(stretch,strat,center,end)
+alignt-self:stretch;('')
+$
+사용법 영상참조 영상뒷부분 실습하는거보면 이해됨
+grid-column으로 셀 합치기같은거
+
+8강
+변형과 애니메이션
+transform속성
+: scale(2); _두배크기
+: rotate(45deg); _45도 돌리기
+: rotate(0.5turn); _반바퀴 돌리기
+: translate(24px,24px); _()만큼 옮기기
+: translate(-33%,67%); _''
+: skew(20deg,20deg); _()도만큼 기울이기
+위 value들을 띄어쓰기로 한번에 입력가능
+(input checked요소에 대하여 css선택자에 :checked,
+:not(:checked) 를 통해 transform구현
+
+transition속성 
+:left 1s; _이동시 1초에 걸쳐이동
+:left 500ms; _''0.5초 ''
+:backgroud-color 1s; _1초에 걸쳐 색바뀜
+:transform 1s: _1초에 걸쳐 transform속성 적용
+
+animation속성(abcani라는 이름의 animation선언)
+(from의 transition효과에서 to의 transition효과로 끝남)
+(50%만큼 진행됐을때 transition효과 적용)
+@keyframes abcani{
+from{ transiton: 어쩌고}
+50%{ transition: 어쩌고}
+to{ transtion: 어쩌고}
+}
+(이후 :hover등의 선택자에 animation속성추가후 value로 선언한 animation이름 적용)
+(선언animation의 transition에는 시각적요소만 쓰고
+적용시킬 선택자의 animation속성의 value 뒤에 1s등의 시간 적용)
+ex) :hover{animation:abcani 1s}
+vscode 얄코심화css파일-animation.html파일참고
+
+
+$
+개발자도구에서 사용자에이전트스타일시트칸의소스내용은
+브라우저에서 지정하는 원래 기본값
+$
+colorspace사이트: 색값입력하면 어울리는색들 나열해줌

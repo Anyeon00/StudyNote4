@@ -1,0 +1,73 @@
+$
+크롬 개발자도구 : ctrl + shift + i
+선택자가 구체적일수록 우선순위 적용
+
+ex)선택자를 p.blue{}로 사용할때
+:p태그이면서 class가 blue인 요소들에 적용
+
+ex)태그 속성에 class="blue dark"는 blue와 dark라는
+두개의 클래스를 가짐
+: css에는 .blue.dark{}로 사용
+
+1촌자식태그만 선택자로 사용할때
+: .outer > li {} 
+
+선택자를 *로 사용하면 해당 파일 전체적용
+
+선택자뒤에 :hover사용하면 해당 선택자중 마우스가 올라간 요소를 적용
+ex) li:hover{}
+
+첫번째 자식요소만 적용(last-child도 가능)
+: 선택자:first-child
+
+inline은 width와 height속성을 무시,
+margin&padding은 가로만 적용
+
+margin: 다른 요소들을 밀어냄(바깥쪽여백)
+_block에서 상하margin은 서로 상쇄
+
+li(block요소)를 가로로 나란히 출력할때 display를
+inline으로 바꿔주면 됨
+_상단메뉴들을 list로해서 클릭할수 있게 하려면
+inline보다는 좀더 box하게 inline-block으로 지정
+
+css문제 연습사이트: 18번까지
+
+
+*******************************
+font-weight : 글자굵기
+text-indent : 들여쓰기
+list-style : ul/ol 속성(리스트 앞에 점 스타일)
+border-radius : 속성으로 사용, border모서리를 둥글게
+ex)border-radius: 2em(or 10%)
+text-shadow :그
+box-shadow :림 자
+background-color : padding안 색 채우기
+background-image: url(https://~) : 배경이미지
+background-position: "위치(top, right, center, 50% 50%)
+background-size: "크기(auto, contain, cover, 10%)
+overflow: hidden :안쪽div요소가 바깥div요소로 나와서 침범할때 바깥div에 적용
+cursor:커서모양(auto는 default값,default는 기본모양고정,pointer는 링크클릭할때모양)
+ex)cursor:pointer;
+
+
+요소를 숨기는 방법세가지
+: opacity:0;(투명도 0~1), visibility:hidden;(자리는 차지), display:none;(자리도 차지x)
+
+선택자뒤에 :hover사용하면 해당 선택자중 마우스가 올라간 요소를 적용
+ex) li:hover{}
+
+flex레이아웃:얄코-꾸미는css 11강
+[display를 flex로 지정하면 플렉스 방식으로 자식 요소들을 배치]
+0. 부모요소의 display를 flex로 지정
+1. flex-direction(column,row)로 작용방향 결정
+2. flex-basis(N px)로 고정크기를 가지는 요소 설정
+3. flex-grow로(0~1)빈공간을 채우는 요소 설정 
++4. gap(N px)으로 요소들간 공백크기 지정
++5. align-items(stretch,flex-start,center,flex-end) flex-direction과 수직 기준으로 요소들을 어디에 배치할지 지정
++6. justify-content(5와동일)flex-direction축기준 즉, 5번과 반대 기준으로 요소를 어디에 배치할지 지정
+
+********************************
+빠른코드작성
+ul>li : ul자식태그로 li 넣기
+ul>li^ol>li: ul자식태그로 li넣고 다시 나와서 ol사용

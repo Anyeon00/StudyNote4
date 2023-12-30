@@ -1,0 +1,40 @@
+젤처음에
+:<!doctype html> <html>
+젤마지막에
+:</html>
+본문 위에 페이지설명코드들은 이 안에
+:<head> ~ </head>
+사이트이름
+:<title> ~ </title>
+?
+: <meta charset="utf-8">
+
+본문은 이 안에
+:<body> ~ </body>
+
+제목
+:<h1> ~ </h1>
+목차
+:<ul> <li> ~ </li> </ul>
+목차+ - 각 목차에 번호붙일때
+:<ol> <li> ~ </li> </ol>
+줄바꿈
+:<br> 한번만
+단락
+:<p> ~ </p>
+이미지 
+:<img src="~">  
+이미지 + 사진크기조절
+: <img src="~" width="100%">
+링크
+:<a href="~"> ~ </a>
+링크+ 새탭에 열리게 하기
+:<a href="~" target="_blank"> ~ </a>
+링크++ 링크에 커서올려놓으면 설명나오게하기
+:<a href="~" title="~">
+
+
+글씨 진하게
+: <strong> 내용 </strong>
+밑줄 _u = underline
+:<u> 내용 </u>

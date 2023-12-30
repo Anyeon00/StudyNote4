@@ -1,0 +1,113 @@
+CSS강의요약
+1. css문법 두가지 사용방법
+-1) head안
+-2) html tag안
+2. 선택자 사용법
+-1) html tag를 선택자로 사용
+-2) html tag안에 class속성을 부여해 사용
+-3) id 속성을 부여해 사용
+3. 박스모델
+-1) content,padding,border,margin 개념
+4. 미디어쿼리
+5. css의 재사용
+$
+아무 의미없는 그냥 css를 사용하기위해 
+존재하는 tag(div=block,span=inline)
+:<div> ~ </div>
+:<span> ~ </span>
+
+
+$ (html 태그안에)style="color:red"
+에서 style은 이 코드는 css문법으로
+해석하게 하도록 한다는 속성이다.
+한 태그안에 여러개의 css코드를 넣고싶으면 한 코드가 끝나고 ;(세미콜론)입력 ex) style="color:red;text-decoration:underline"
+
+$ <head>
+<style>
+a { color : black;}
+</style>
+ </head>
+에서 a는 어떤 태그에 {}안의 css문법을 적용시킬지 정하는 '선택자'
+
+검은색
+: color:black
+밑줄을 사라지게
+: text-decoration:none
+밑줄
+: text-decoration:underline
+글씨크기 
+(xx-large, large, small, xx-small, medium, 60px)
+: font-size:large
+가운데정렬
+(center, left, right)(align:정렬)
+: text-align:center
+테두리두께
+:border-width:5px
+"색깔
+:border-color:red
+"선종류
+:border-style:solid
+테두리 두께,색깔,선종류를 한번에 적용(value 순서는 상관X)
+: border: 5px solid red;
+테두리와 내용사이의 공간
+:padding:20px
+(padding-left:5px 처럼 상하좌우한쪽만 지정하여 조정도 가능)
+2개의 테두리 사이의 공간
+:margin:20px
+$
+테두리등 해당content에 적용시킬css에 대한 기본값을 해당부피만큼쓸건지, 화면전체에대해 쓸건지, 특정크기만큼 쓸건지
+:display:inline
+:display: block
+:width:100px & height:100px
+안보이게하기
+:display:none
+테두리 아래쪽만 보이게
+:border-bottom: 1px solid gray
+$
+f12 개발자도구를 통해 해당 content의
+padding border margin크기를 보면서 조정
+$
+그리드를 이용하여 영역을 나누고 싶은
+content들을 <div></div>태그로 묶기
+(부모<div>태그를 그 바깥에 적용도 가능_
+부모<div>tag는 id속성 부여),(columns:열, raws:행)
+: style에 선택자로 #(id선택자이름){
+display: grid;
+grid-template-columns: 150px 1fr;
+}
+(150px는 첫번째content, 1fr는 두번째content)
+$
+미디어쿼리_if()면 ~하게 출력
+ex) <div>선택자 content를 화면이 800px이상이면 출력
+:@media(max-width:800px){
+div{display:none;}}
+$css의 재사용
+여러 페이지에서 같은 css_<style>~</style> 적용하기
+: style.css라는 파일을 만들고 위의 ~ 부분만 붙여넣고 해당 css코드를 적용시킬 파일(페이지)의 head에
+<link rel="stylesheet" href="style.css"> 입력
+
+
+$
+head에서 여러 선택자에 대해 같은css내용을 적용하기
+ex) h1, a태그
+:h1, a{
+	color:black;
+}
+
+$
+본 링크에 대해 css적용하기(:class선택자)
+: html태그안에 class="saw"라는 속성을 작성후 head안에서 선택자를 .saw로 사용
+
+본 링크에 대해 css를 적용하는데
+그중 현재 보고 있는 링크에 대해 css를 적용한다면(본 링크는 회색으로 표시하는데 현재 보고있는 페이지는 red로 표시_id선택자로 class선택자보다 우선적용시키기)(:id선택자)
+(id선택자>class선택자>tag선택자>적용tag와 가까이 있는 선택자>멀리있는 선택자)
+:html태그안에 id="active"라는 속성을 작성 후 head안에서 선택자를 #active로 사용
+
+$
+해당 코드가 어떤 css들의 영향을 받고있는지
+:페이지에서 우클릭후 검사클릭
+$
+caniuse.com css언어를 사용해도되는지 보여주는 사이트
+$
+~사이는 없는 셈 쳐라
+: <!-- 		~ 	-->

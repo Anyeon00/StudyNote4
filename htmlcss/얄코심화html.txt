@@ -1,0 +1,36 @@
+1강
+head에서
+<meta property="og:title" content="~">
+:카카오톡등 공유시 링크에 표시되는 제목
+<meta property="og:description" content="~">
+:'' 설명
+<meta property="og:image" content="~">
+:'' 이미지
+ <link rel="shortcut icon" href="~" type="image/x-icon">
+: 파비콘(상단 tilte왼편에 표시되는 사이트문양)
+
+2강
+접근성
+img태그에 alt="설명" 속성 추가
+(설명이 필요없는 경우에도 ""라고 공백으로 추가")
+
+3강
+semantic tags 용도에따른태그
+이하 태그들의 작동?은 div와 같음
+main태그를 제외하고 중복사용가능 
+<header>: 제목역할_로고&제목&검색창등
+<nav>: 링크를 가진 메뉴들
+<footer>: 최하단 페이지주인연락처,이메일등
+<main>: 페이지의 주요내용,페이지에서 하나만존재
+<aside>: 주로 nav가 상단가로줄 메뉴라면 aside는 좌측 메뉴_보다 낮은 계급의 메뉴들
+<section>: main안의 구역을 나누는데 사용_그 이하는 div
+<article>: 같은형식이 여러개로 구성될때
+ex)쇼핑몰에서 제품여러개가 나올때
+
+4강
+BEM 가독성을 위한 이름짓기
+:? 뭔소린지
+
+5강
+기타미디어
+svg
