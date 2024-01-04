@@ -1,0 +1,70 @@
+섹션5 싱글톤 컨테이너
+
+
+[싱글톤 패턴]
+: 클래스의 인스턴스가 딱 1개만 생성되는 것을 보장하는 디자인 패턴
+
+- 자기 자신 클래스를 내부에서 private static final로 만듦
+- 해당 객체 getter 메서드 
+- 외부에서 생성 못하게 생성자를 private으로
+ex) public class SingletonService{
+  private static final SingletonService instance = new SingletonService();
+
+  public static SingletonService getInstance(){
+    return instance;
+  }
+
+  private SingletonService(){}
+}
+
+단점 : 이 코드를 일일이 다써야됨, 생성시 구체클래스에 의존해야함, 유연성이 떨어짐
+
+
+[싱글톤 컨테이너]
+: 위 단점은 다 없애주면서 객체 인스턴스를 싱글톤으로 관리해줌
+
+
+주의사항
+싱글톤 객체가 상태를 유지하게 설계하면 안된다
+스프링 빈은 무상태로 설계해야한다
+누가 값을 변경가능한 필드가 존재하면 안됨, (가급적)읽기만 가능해야함
+
+- 설명: 여러사용자가 같은 객체의 필드에 접근하니까 당연히 값이 공유됨
+ex) private int price; 라는 필드를 가진 싱글톤 객체가 존재
+근데 여러 사용자가 본인 물건의 price를 여기다 저장하면 당연히 말이 안됨
+-> 객체 필드에 저장하지말고 메소드에서 parameter로 받은걸 그대로 return시키도록
+
+* 실무에서 정말 중요한 주의사항
+
+
+[@Configuration과 싱글톤]
+
+
+결론 => 
+@Configuration와 @Bean 어노테이션이 바이트코드를 이용하는 기술을 써서 
+스프링 컨테이너가 Bean들을 싱글톤으로 관리해줌
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

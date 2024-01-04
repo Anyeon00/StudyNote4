@@ -1,0 +1,121 @@
+섹션7 의존관계 자동 주입
+
+[다양한 의존관계 주입 방법]
+1. 생성자 주입
+- 생성자 호출시점에 딱 1번만 호출 보장, 불변/필수 의존관계에 사용
+
+2. 수정자 주입(setter 주입)
+- setter메서드로 주입, 당연히 @Autowired 사용, 선택/변경 가능
+
+3. 필드 주입
+- 필드에 바로 주입, 외부에서 변경하기 어려워 테스트 불가능, 쓰지말자(권장X)
+
+4. 일반 메서드 주입
+- 아무 메서드에다 @Autowired쓸수 있음, 잘안씀
+
+
+* 스프링 빈 클래스여야(@Component 클래스) @Autowired가 작동함
+
+
+[옵션 처리]
+
+주입할 스프링 빈이 없어도 동작해야할 때
+1. @Autowired(required = false) 로 설정 
+- 메서드 호출 자체가 안됨
+2. argument앞에 @Nullabe 작성
+- null이 입력됨
+3. argument타입으로 Optional<타입>으로 쓰기 
+- null 대신 Optional.empty가 입력됨
+
+
+[생성자 주입을 선택해라!]
+
+이유:
+- 불변해야한다
+- final 을 사용가능 _처음 직접 assignment하거나 생성자에서만 값을 넣을 수 있음
+(처음넣은 값 이후로 값변경하지 않는 경우 사용)
+
+=> 항상 생성자 주입을 써라, 가끔 옵션이 필요하면 수정자 주입 선택
+
+[롬복과 최신 트렌드]
+
+막상 개발 해보면 대부분 불변, 그래서 생성자에 final 보통 씀
+-> 그러면 생성자, 주입코드도 써야하는데 귀찮음
+
+=> Lombok 라이브러리 사용 (@RequiredArgsConstructor사용)
+
+자세 설명 -> 
+1. spring부트 만들때 라이브러리(Dependencies)에서 lombok 선택
+2. 플러그인 lombok 설치
+3. 인텔리제이 settings에 'annotation processors'검색, Enable annotaion processing 체크
+4. 클래스위에 @RequiredArgsConstructor
+(final이 붙은 변수를 argument로받는 생성자를 자동으로 만들어줌)
+
+
+* Lombok : 클래스위에 @Getter, @Setter, @ToString등도 써주면 다 그냥 사용가능
+
+
+=>정리 : 최근에는 생성자를 딱 1개두고 @RequiredArgsConstructor를 주로 사용
+
+
+
+[조회 빈 2개 이상 문제]
+@Autowired(@RequiredArgsConstructor도 마찬가지)는 타입으로 조회한다
+-> 같은 타입의 빈이 2개 이상일시 문제가 발생
+
+다음 챕터가 해결방법
+
+[@Autowired 필드 명, @Qualifier, @Primary]
+
+1. @Autowired 필드 명 매칭
+-> @Autowired는 Type다음으로, 필드이름or파라미터이름 순서로 매칭을 시도함
+* ex) 파라미터에(MemberRepository jpaMemberRepository) 라고 쓰면 
+MemberRepository 빈이 여러개일때 JpaMemberRepository를 매칭함
+
+2. @Qualifier -> @Qualifier끼리 매칭 -> Bean 이름 매칭
+-> 구현체(클래스)들에 @Qualifier("name1") 이런식으로 이름 붙여주고
+파라미터앞에 @Qualifier("name1") 을 붙여주면 해당 구현체를 매칭함
+
+3. @Primary 사용	// 자주 사용
+-> 우선순위 지정
+* 구현체에 @Primary를 붙여주면 위 상황에서 별 다른 조치 없이도 해당 구현체가 최우선적으로 매칭됨
+
+=> 자주 쓰는건 @Primary로, 가끔쓰는건 @Qualifier로 혼합 사용하면 깔끔하게 유지 가능
+
+*@Primary와 @Qualifier중엔 @Quarlifier가 우선권
+
+
+[애노테이션 직접 만들기]
+로도 해결 가능
+실무에서 가끔 사용
+영상참고
+
+
+[조회한 빈이 모두 필요할 때, List, Map]
+ex) 클라이언트가 선택한 걸로 쓰고 싶을 때
+
+
+[자동, 수동의 올바른 실무 운영 기준]
+
+- 편리한 자동 기능을 사용하자 _@Controller @service @Repository @Configuration 등등
+- (AOP등)기술 지원 객체는 (수는 적은데 영향은 큼) 수동으로 권장
+- 다형성을 적극 지원하는 비즈니스 객체는 수동 등록 고려
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

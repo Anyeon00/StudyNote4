@@ -1,0 +1,114 @@
+섹션4 스프링 컨테이너와 스프링 빈(빈 조회하기)
+
+[스프링 컨테이너 생성]
+스프링컨테이너를 부를 때
+ApplicationContext 또는 BeanFactory로 구분하여 이야기한다
+
+1. 스프링 컨테이너 생성
+스프링 컨테이너 <- 스프링 빈 저장소 // 가 있음
+
+2. 스프링 빈 등록
+@Bean이 붙은걸 모두 호출해서 return된 객체들을 스프링 빈 저장소에 등록
+(스프링 빈 이름과 구현객체를 묶어서)
+* 스프링 빈 이름은 메서드 이름을 사용하지만 직접 부여도 가능 _@Bean(name="memberService2")
+* 스프링 빈 이름은 중복되면 안됨
+
+3. 스프링 빈 의존관계 설정
+코드에 따라 인터페이스와 구현클래스간의 의존관계를 주입(서로 엮어주는 것)
+* 단순히 자바 코드를 호출하는 것 같지만, 차이가 있다. 이 차이는 뒤에 싱글톤 컨테이너에서 설명
+
+
+[컨테이너에 등록된 모든 빈 조회]
+AnnatationConfigApplicationContext ac = new ''(AppConfig.class);
+String[] beanDefinitionNames = ac.getBeanDefinitionNames();
+for(String beanDefinitionName : beanDefinitionNames){
+  BeanDefinition beanDefinition = ac.getBeanDefinition(beanDefinitionName);
+  if(beanDefinition.getRole() == BeanDefinition.ROLE_APPLICATION){
+    Object bean = ac.getBean(beanDefinitionName);
+    sout("name = " + beanDefinitionName + " object = " + bean);
+  }
+}
+
+[스프링 빈 조회 - 기본]
+ac.getBean(빈이름, 타입) _이름과 타입으로 조회
+: MemberService memberService = ac.getBean("memberService", MemberService.class);
+Assertions.asserThat(memberService).isInstanceOf(MemberServiceImpl.class);
+
+ac.getBean(타입) _타입으로만 조회 (같은 타입이 여러개 있으면 나중에 곤란해짐)
+: MemberService memberService = ac.getBean(MemberService.class);
+Assertions.asserThat(memberService).isInstanceOf(MemberServiceImpl.class);
+ 
+* 조회 대상 스프링 빈이 없으면 예외 발생
+
+[스프링 빈 조회 - 동일한 타입이 둘 이상]
+특정 타입으로 모두 조회하기
+ac.getBeansOfType(MemberRepository.class); alt + enter
+for(String key : ~.keySet()){
+  soutv("key = " + key + "value = " + ~.get(key));
+}
+
+[스프링 빈 조회 - 상속 관계]
+중요
+
+부모 타입으로 조회하면, 자식 빈들도 모두 함께 조회됨 // 대부분의 경우에 자식들은 다 함께 끌려나옴
+예를 들면 최상위 객체인 Object타입으로 조회하면, 모든 스프링 빈을 조회함
+
+
+* 직접 빈을 조회할 일은 거의 없음
+
+[BeanFactory와 ApplicationContext]
+BeanFactory라는 인터페이스
+ApplicationContext라는 인터페이스 //BeanFactory를 상속받음
+
+BeanFactory : 스프링 컨테이너의 최상위 인터페이스
+스프링 빈을 관리하고 조회하는 역할
+getBean()제공
+
+ApplicationContext
+빈의 관리 조회 외에 부가기능
+BeanFactory외에도 여러가지 인터페이스를 상속받고 있음
+(국제화기능, 환경변수, 편리한 리소스 조회)
+
+=> 정리
+ApplicationContext는 BeanFactory의 기능을 상속받음
+빈 관리기능 + 편리한 부가 기능을 제공
+BeanFactory를 직접 사용할 일은 거의 없다, ApplicationContext를 사용
+둘다 스프링 컨테이너라 한다
+
+
+[다양한 설정 형식 지원 - 자바코드,XML]
+스프링 컨테이너는 다양한 형식의 설정 정보를 받을 수 있게 유연하게 설계됨
+
+ApplicationContext를
+자바 코드로 구현하면 AnnatationConfigApplicationContext
+-> AppConfig.class
+
+
+[스프링 빈 설정 메타 정보]
+어떻게 다양한 형식의 설정 형식을 지원하는 것일까
+-> BeanDefinition이라는 추상화(역할)(인터페이스)를 사용하기 때문
+BeanDefinition을 빈 설정 메타 정보라고 함
+@Bean 또는 xml의 <bean>~</bean>으로 
+컨테이너에 빈을 만들어냄
+
+
+결론 : 스프링이 xml 자바코드 또는 기타등등 다양한 형태의 설정 정보를
+BeanDefinition으로 추상화해서 사용한다
+
+
+* AppConfig클래스(@Configuration)에서 메소드로 빈을 생성하는데
+이때 이 메서드가 BeanFactory의 메서드를 사용한 것
+
+
+
+
+
+
+
+
+
+
+
+
+
+
