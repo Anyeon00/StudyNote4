@@ -1,0 +1,38 @@
+섹션1 프로젝트 환경설정
+
+
+스프링 부터 dependency추가
+spring web
+thymeleaf
+spring data jpa
+h2 database
+lombok	//lombok사용시 settings의 Annotation Processors에서 Enable annotation processing 체크(plugin부터설치)
+
+build.gradle에 의존관계 추가
+implementation 'org.springframework.boot:spring-boot-devtools'
+// runtime중 바뀐코드파일만 recompile시 자동적용기능 _Build의 Recompile버튼
+
+resources에 application.yml파일 추가 (properties파일삭제) _이런설정들 정보: 스프링부트사이트가이드참고
+application.yml파일 코드:
+spring:  #띄어쓰기 2칸
+  datasource:  #띄어쓰기 4칸
+    url: jdbc:h2:tcp://localhost/~/jpastudy;  #띄어쓰기 6칸, 여기는 사용하는 데베파일 경로
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create  #자동으로 테이블 만들어줌
+    properties:
+      hibernate:
+        format_sql: true
+
+logging: #로그로 sql실행결과 출력
+  level:
+    org.hibernate:SQL: debug
+    org.hibernate:type: trace  #쿼리파라미터 출력, 더 디테일한 출력은 아래방법
+#구글에 spring boot datasource decorator 검색해서 나오는 깃허브페이지(gavlukovskiy)의 하단 readme에 QuickStart 밑에 있는 implementation("~~~:starter:1.8.1") 이거 복사해서 build.gradle의 dependencies에 추가, 
+개발단계에서만 사용, 실무에서는 퍼포먼스 저하 가능성
+
+

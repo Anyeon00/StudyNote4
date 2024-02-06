@@ -1,0 +1,61 @@
+tab 역방향(tab취소)
+: shift + tab
+
+변수명 println
+: soutv
+
+Constructer
+Getter
+Setter
+: Alt + Insert
+
+자동 import
+: Alt + Enter
+* 생성자 또는 Getter and Setter에서 모든 필드 선택시 ctrl + a
+
+자동으로 type에 맞는 변수생성(자동 변수 추출)
+: Alt + Enter
+
+리팩토링 관련 키모음
+: shift + ctrl + alt + t
+* extract method쓰면 해당코드를 함수로 만들어줌
+
+변수이름 일괄변경
+: shift + f6
+
+커서 여러줄
+: ctrl 두번 (두번째누르면서) + 위아래 화살표
+
+테스트클래스 만들기
+: 클래스이름에 커서, ctrl + shift + t, 테스트할 함수들 체크후 enter
+// 테스트 패키지에 만들어짐
+
+최근 run 재실행
+: shift + f10
+
+최근 본 파일
+: ctrl + e
+
+클래스 파일 찾기
+: shift 두번
+
+모든 파일중 코드 찾기
+: ctrl + shift + f
+
+구현체로 이동
+: 인터페이스이름에 커서, ctrl + alt + b
+
+코드추적(라이브러리 코드내용확인도 가능)
+: ctrl + 클릭 or ctrl + b
+
+오류난 곳으로 바로 이동
+: f2
+
+for문 자동 생성
+: fori 후 tab
+
+자료구조가 존재할 때 foreach문 생성
+: iter 후 tab
+
+translate 플러그인 영어로 변환
+: ctrl + shift + x

@@ -84,8 +84,8 @@ _구현 클래스에 의존하지 말고, 인터페이스에 의존하라는 뜻
 즉, 역할에 의존해야한다, 
 ex) 사용자는 '자동차'를 사용하는 것임, 자동차가 어떻게 구현되었는지는 몰라도 됨
 위 OCP의 예에서 MemberService가 MemberRepository의 구현객체를 직접 선택하고 있으므로 DIP위반(알고있으면 의존관계임, MemberService가 인터페이스뿐만아니라 구현객체까지 알고있으므로 DIP위반)
--> 이를 DI컨테이너를 이용해 해결함(사용할 Repository구현객체를 Bean으로 등록해 컨테이너에 넣고 Service는 MemberRepository를 @Autowired로 가져옴으로 해결)
-
+-> 이를 DI컨테이너를 이용해 해결함(사용할 Repository구현객체(실무에선 @Repository클래스)를 Bean으로 등록해 컨테이너에 넣고 Service는 MemberRepository를 @Autowired로 가져옴으로 해결)
+* @Repository가 implement Repository와 같은 것
 
 * 다형성만으로는 OCP, DIP를 지킬수 없다, 뭔가 더필요하다 라는 결론
 

@@ -19,7 +19,7 @@ ApplicationContext 또는 BeanFactory로 구분하여 이야기한다
 
 
 [컨테이너에 등록된 모든 빈 조회]
-AnnatationConfigApplicationContext ac = new ''(AppConfig.class);
+ApplicationContext ac = new AnnatationConfigApplicationContext(AppConfig.class);
 String[] beanDefinitionNames = ac.getBeanDefinitionNames();
 for(String beanDefinitionName : beanDefinitionNames){
   BeanDefinition beanDefinition = ac.getBeanDefinition(beanDefinitionName);

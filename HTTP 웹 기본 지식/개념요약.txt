@@ -8,3 +8,10 @@ TCP/IP패킷으로 감쌈(IP,Port정보)
 
 HTTP메세지에 담겨있는
 HTTP메서드, HTTP상태코드, HTTP헤더? 등에 대한 내용
+
+
+
+
+HTTP 스펙 정보
+RFC 7230~7235 버전
+https://tools.ietf.org/html/rfc7230

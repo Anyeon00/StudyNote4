@@ -42,6 +42,7 @@ ex) 응답 메시지
 HTTP/1.1 301 Moved Permanetly
 Location: /new-event
 // 클라이언트가 /new-event로 자동 이동
+// Location헤더 : 섹션7 [특별한 정보] 참고
 
 
 영구 리다이렉션, 일시 리다이렉션, 특수 리다이렉션

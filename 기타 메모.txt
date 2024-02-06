@@ -1,0 +1,26 @@
+커스텀 매크로
+: Settings의 LiveTemplates에 만들기 가능
+
+css붙여넣기
+1. getbootstrap.com - download - CSS and JS 부분 download
+2. css, js폴더 묶어서, resources 패키지 - static패키지에 붙여넣기
+3. resources파일 우클릭, reload from disk 클릭
+4. Build - Build Project
+
+test
+Assertions.assertThat(비교할객체1).isEqualTo(비교할객체2);
+* 동일성(주소)비교X, 동등성비교
+Assertions.assertThrow(XXXException.class, () -> 실행할메서드);
+
+
+사용 exception
+1. IllegalStateException _회원 가입시 중복회원일때
+2. RuntimeException _재고를 뺐을때 0보다 적은 경우(extends해서 NotEnoughStockException 만듦)
+
+
+객체지향적으로 비즈니스 로직을 서비스클래스와 엔터티클래스에 맞춰서 나눠 작성(도메인 모델 패턴)
+* 응집력있게, 유지보수관점
+
+
+@RequestMapping
+: Get매핑으로 오든 Post매핑으로 오든 다 처리 가능함
