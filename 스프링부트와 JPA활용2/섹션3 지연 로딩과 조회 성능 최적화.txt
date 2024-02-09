@@ -54,7 +54,6 @@ ex) public List<Order> findAllOrdersByFetchJoin(){
 
 => 기본적으로 fetch type을 다 lazy로 설정해놓고, 필요한 것만 fetch join으로 repository의 함수로 한방에 가져와 사용하면 해결됨
 
-추가 문제가 있음
 
 
 [ver4 JPA에서 DTO로 바로 조회]
