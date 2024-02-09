@@ -4,9 +4,12 @@ getpoastman.com 설치 실행
 * 이전까지의 controller는 브라우저의 요청을 받아, 직접만든 html파일을 내려주기 위함,
 이거는 API형태로 요청과 응답(json형태데이터)를 처리하는 controller
 
+* @RestController 사용 
+
+* @Data dto클래스에 사용(+@AllargsContructor)
+_request dto, response dto 등등 dto를 어떻게 구성할 것인지
+
 [회원 등록 API]
-
-
 
 [회원 수정 API]
 

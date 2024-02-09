@@ -1,0 +1,84 @@
+섹션 3.API 개발 고급 - 지연 로딩과 조회 성능 최적화
+
+* 정말 제일 중요한 파트
+전체 조회 api 메서드에 관한 내용
+(repository에 저장된 모든 객체 꺼내서 new Result(List<객체dto>)로 변환해 return 해주는 메소드)
+
+
+
+[ver1 엔터티를 직접 노출]
+지연로딩으로 인해 프록시객체가 조회되어 발생하는 문제, 무한 루프문제
+
+-> 마찬가지로 엔터티를 직접 return시키면 안 됨
+
+
+
+[ver2 엔터티를 DTO로 변환]
+
+엔터티의 정보를 담은 DTO클래스를 만들어 사용하기
+@Data
+@AllArgsContructor
+* 프론트에 return해줄때 엔터티의 필요한 필드만 가지고 있게
+* repository package에
+
+
+지연로딩으로 인한 1 + N 문제
+ex) 저장된 Order들을 모두 조회할 때(List<Order> orders를 find할 때 _repository.findAllOrders())
+1. orders를 조회함 -> order가 2개 나옴
+2. 각 order가 가진 필드(연관관계)들에 대해서 다시 또 조회해야함(order가 2개니까 이 상황이 두 번 일어남)
+=> order를 조회했는데 order의 갯수만큼 또 조회가 일어남(또 db에 접근해야 함)
+=> 1 + N 문제
+
+* 추가설명 : 첫번째로 order조회를 위해 db에 한번 드갓다 나왓는데, order의 연관관계를 갖는 필드들(N)을 조회할 때 지연로딩으로 인해 다시 드가서 꺼내와야함
+* 물론 영속성 컨텍스트에 존재하지 않는다면 DB에서 꺼내옴
+
+한번에 다 꺼내오는 FetchType.EAGER와 같은 기능을 하는 페치조인을 사용해야 함
+
+
+
+[ver3 DTO + 페치 조인]
+
+orderRepository에 fetch join으로 List<Order>를 리턴하는 새로운 함수를 만듦 _repository.findAllOrdersByFetchJoin())
+-> List<Order>를 리턴하는데, "Order" 페치조인 "Member" 페치조인 "Delivery"하는 jpql쿼리를 사용해 얻은 List를 리턴
+-> fetch join을 쓰면 fetch = FetchType.EAGER를 사용한것과 같은 효과 (즉시 로딩, 즉 지연로딩처럼 필요할 때 또 db에 드가서 꺼내오는게 아니라 처음 한번에 다 가져옴)
+
+ex) public List<Order> findAllOrdersByFetchJoin(){
+	return em.createQuery("select o from Order o +
+		" join fetch o.member m" +
+		" join fetch o.delivery d", Order.class)
+		.getResultList();
+}
+* 물론 여기서는 Order객체가 연관관계를 갖는 필드는 member와 delivery인 상황
+* fetch join : JPA책 373p
+
+
+=> 기본적으로 fetch type을 다 lazy로 설정해놓고, 필요한 것만 fetch join으로 repository의 함수로 한방에 가져와 사용하면 해결됨
+
+추가 문제가 있음
+
+
+[ver4 JPA에서 DTO로 바로 조회]
+복잡함 ver3써도됨, ver3가 좀더 좋을지도
+-> ver3는 유연함, 변경용이성
+-> ver4는 제한적임, 대신 좀더 최적화됨(근데 거의 별차이없음)
+장단이 있음
+
+
+
+전체 간단요약 : ver3사용
+1. api메서드 생성(전체 조회 메서드 
+_repository에 저장된 모든 객체 꺼내서 new Result(List<객체dto>)로 변환해 return 해주는 메소드)
+2. dto클래스 생성
+3. repository에 페치조인 메서드 생성 
+
+
+이해안가면 다시 해당 강의영상 + JPA책 보기
+
+
+
+
+
+
+
+
+
