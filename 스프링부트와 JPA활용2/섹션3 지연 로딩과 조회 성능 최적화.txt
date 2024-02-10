@@ -21,6 +21,15 @@
 * 프론트에 return해줄때 엔터티의 필요한 필드만 가지고 있게
 * repository package에
 
+* List<Order>를 List<OrderDto>로 변환
+ex) 
+List<Order> orders = orderRepository.findAll();
+List<OrderDto> collect = orders.stream().map(o -> new OrderDto(o)).collect(Collectors.toList());
+(OrderDto 생성자 파라미터로 Order o를 받음)
+* map 대신 forEach쓰면 각 o에 대해서
+
+* 물론 마지막으로 Result클래스에 한번 더 담아야 함(new Result(List<OrderDto>) 를 반환)
+
 
 지연로딩으로 인한 1 + N 문제
 ex) 저장된 Order들을 모두 조회할 때(List<Order> orders를 find할 때 _repository.findAllOrders())
@@ -72,7 +81,7 @@ _repository에 저장된 모든 객체 꺼내서 new Result(List<객체dto>)로 
 
 
 이해안가면 다시 해당 강의영상 + JPA책 보기
-
+ 
 
 
 

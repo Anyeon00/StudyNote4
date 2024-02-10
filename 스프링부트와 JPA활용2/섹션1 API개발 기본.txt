@@ -9,6 +9,14 @@ getpoastman.com 설치 실행
 * @Data dto클래스에 사용(+@AllargsContructor)
 _request dto, response dto 등등 dto를 어떻게 구성할 것인지
 
+* controller 메서드에서 dto를 파라미터로 받는 경우 
+ex)회원가입시 이름,주소를 가지고 있는 FormDto을 파라미터로 받는 경우
+public 리턴타입 함수이름(@RequestBody @Valid FormDto form){~}
+
+* controller 메서드에서 쿼리파라미터를 받는 경우
+ex) @PutMapping("/api/members/{id})  //{id}가 파라미터
+public 리턴타입 함수이름(@PathVariable("id") Long id){~}
+
 [회원 등록 API]
 
 [회원 수정 API]
