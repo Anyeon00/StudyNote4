@@ -1,0 +1,19 @@
+build.gradle 설정
+
+buildscript{
+  dependencies{
+    classpath("gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:1.0.10")
+  }
+}
+
+apply plugin: "com.ewerk.gradle.plugins.querydsl"
+
+dependencies{
+  implementation 'com.querydsl:querydsl-jpa'
+  implementation 'com.querydsl:querydsl-apt'
+}
+
+...더 있는데 나중에 구글링해서 알아서하기
+
+1. 복잡한 동적쿼리를 편리하게 생성가능
+2. 정적 쿼리인 경우도 직관적인 문법, 문법오류시 컴파일에러

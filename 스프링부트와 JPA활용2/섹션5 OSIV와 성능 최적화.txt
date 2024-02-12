@@ -1,0 +1,50 @@
+OSIV(Open Session In View)
+
+Jpa에서의 EntityManager가 Hibernate에서는 Session
+
+
+OSIV전략 : //spring.jpa.open-in-view: true의 기능_yml파일
+트랜잭션 시작 시점부터 API응답이(고객에게 응답이 ) 끝날때까지 영속성 컨텍스트(&데이터베이스 커넥션)를 유지한다.
+지연 로딩은 영속성 컨텍스트가 살아 있어야 가능하고, 영속성 컨텍스트는 기본적으로 데이터베이스 커넥션을 유지한다.
+
+단점 : 대신 너무 오랫동안 데이터베이스 커넥션 자원을 사용하므로, 커넥션이 모자라 장애로 이어질 수 있다.(커넥션이 마른다고 표현)
+
+
+OSIV종료 : //spring.jpa.open-in-view: false
+트랜잭션을 종료할 때 영속성 컨텍스트를 닫고, 데이터베이스 커넥션도 반환한다.
+ex)
+public void join(Member member){
+  em.persist(member);
+}
+// 이때 트랜잭션과 같이 영속성 컨텍스트도 끝남
+
+Long id = memberService.join(member);
+// 이 시점 부터 영속성컨텍스트 안쓰게 됨
+
+단점 : 모든 지연로딩을 트랜잭션 안에서 처리해야 함(영속성컨텍스트가 살아있지 않기 때문)
+또는 페치조인으로 해결해야 함
+
+-> query패키지와 클래스를 만들어서 거기서 지연로딩 코드를 처리하고 결과를 리턴시키는 방법으로 해결
+ex) @GetMapping("~")
+public List<OrderDto> orderV3(){
+  return orderQueryService.ordersV3();
+}
+//지연조회하는 코드를 ordersV3()에 넣음
+
+
+=> 즉,
+OSIV를 끈 상태로
+Command와 Query를 분리
+ex)
+OrderService: 핵심 비즈니스 로직
+OrderQueryService: 화면이나 API에 맞춘 서비스(주로 읽기 전용 트랜잭션 사용)
+
+
+* 이 파트는 어플리케이션이 큰 경우 적용 고려
+* OSIV관련 JPA책 13장 웹 어플리케이션과 영속성 관리
+
+
+
+
+
+

@@ -1,0 +1,31 @@
+Repository마다 
+save()
+findOne()
+findAll()
+등 반복되는 것도 줄이자
+
+-> Spring Data Jpa
+
+간단한 사용법
+1. Repository인터페이스 생성
+2. extends JpaRepository<엔터티타입, pk타입>
+* 구현체는 spring data jpa가 알아서 만들어서 넣어줌
+
+3. 없는 메서드는 추가하기
+ex) List<Member> findByName(String name);
+//위 Name이라는 단어를 보고
+// select m from member m where m.name = :name
+// 를 사용하는 메서드를 스프링 데이터 jpa가 알아서 오버라이드해 구현해줌
+
+
+* 인터페이스 명세 보고 필요한거 알아서 갖다 쓰기
+* 웬만한 메서드는 다 있음
+
+* 자주 쓰는 메서드 목록
+save()
+findAll()
+findById().get() // optional타입으로 반환해서 .get()필요
+
+
+실무에서는 조심해서 사용해야함
+

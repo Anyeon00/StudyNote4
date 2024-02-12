@@ -1,7 +1,7 @@
-이전까지는 ?toOne 관계에 대해서 다뤘음(그런가? 그냥 orderRepository에 order들조회하고, id로 member하나 조회했는데)
+이전까지는 ?toOne 관계에 대해서 다뤘음(연관관계를 가지고 있는 필드 _Order가 가지고 있는 Member)
 
-여기는 OneToMany를 조회, 최적화하는 방법
-(위에서 찾은 order의 orderItems와, 이 orderItems의 item을 조회하기)
+여기는 OneToMany를 조회(연관관계를 가지고 있는 컬렉션필드를 조회), 최적화하는 방법
+(Order의 List<OrderItem>과, 이 orderItems를 통해 item을 조회하기)
 (즉 주문내역과 그 상품명을 같이 출력하기)
 
 
@@ -73,8 +73,8 @@ jpa:
 
 
 API개발 고급 정리
-*섹션 3은 ?ToOne 연관관계의 필드 조회
-*섹션 4는 ?ToMany 연관관계의 필드 조회
+*섹션 3은 ?ToOne 연관관계의 필드 조회(객체하나인 필드)
+*섹션 4는 ?ToMany 연관관계의 필드 조회(컬렉션 필드)
 엔터티 조회(등록, 수정은 API개발 기본_섹션1)
 - 엔터티 조회 후 DTO로 변환
 - 페치 조인으로 쿼리 수 최적화
