@@ -8,9 +8,13 @@ spring data jpa
 h2 database
 lombok	//lombok사용시 settings의 Annotation Processors에서 Enable annotation processing 체크(plugin부터설치)
 
+settings - Build, Excution, Deplyment - Build Tools - Gradle 의 Build and run using과 Run tests using을 IntelliJ IDEA로 변경
+
 build.gradle에 의존관계 추가
-implementation 'org.springframework.boot:spring-boot-devtools'
+1. implementation 'org.springframework.boot:spring-boot-devtools'
 // runtime중 바뀐코드파일만 recompile시 자동적용기능 _Build의 Recompile버튼
+2. implementation 'org.springframework.boot:spring-boot-starter-validation'
+// jpashop예제의 memberform에서 사용
 
 resources에 application.yml파일 추가 (properties파일삭제) _이런설정들 정보: 스프링부트사이트가이드참고
 application.yml파일 코드:
