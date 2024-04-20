@@ -20,8 +20,17 @@ Setter
 : shift + ctrl + alt + t
 * extract method쓰면 해당코드를 함수로 만들어줌
 
+코드 부분적으로 메서드로 추출하기
+: ctrl + alt + m
+
+코드 합쳐서 줄이기(return문에 바로 합치기같은거)
+: ctrl + alt + n
+
 변수이름 일괄변경
 : shift + f6
+
+변수이름 일괄변경 파일 단위
+: ctrl + r
 
 커서 여러줄
 : ctrl 두번 (두번째누르면서) + 위아래 화살표
@@ -59,3 +68,6 @@ for문 자동 생성
 
 translate 플러그인 영어로 변환
 : ctrl + shift + x
+
+메서드정보 주석
+: /** + enter
